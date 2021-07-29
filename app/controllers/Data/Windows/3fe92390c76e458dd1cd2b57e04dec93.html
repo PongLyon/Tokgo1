@@ -1,0 +1,70 @@
+<div id="markdown-body" class="m-content-container markdown-body">
+    <p>#MFC中创建透明画刷
+        MFC绘图可以很明显的看到先前画的矩形会被后来画的矩形所覆盖掉，这时候我需要后来画的矩形透明。那么我们要怎么来实现呢？
+        #方法一
+        可以利用GetStockObject 这个函数来实现，GetStockObject 函数获取的是一个画刷句柄。</p>
+    <pre><code class="language-C++">//&#x521B;&#x5EFA;&#x900F;&#x660E;&#x753B;&#x5237;
+RECT rect;
+rect.top = 0;
+rect.left = 0;
+rect.right = 100;
+rect.bottom = 100;
+static HBRUSH m_brush;&#x9;//&#x753B;&#x5237;&#x53E5;&#x67C4;
+m_brush = (HBRUSH)GetStockObject(NULL_BRUSH);
+//&#x5C06;&#x7A7A;&#x753B;&#x5237;&#x9009;&#x5165;&#x8BBE;&#x5907;&#x63CF;&#x8FF0;&#x8868;  
+ SelectObject(hdc, m_brush);
+ //&#x7ED8;&#x5236;&#x4E00;&#x4E2A;&#x77E9;&#x5F62;  
+ Rectangle(hdc, one_w, y, one_w + 100, y+100);//&#x7ED8;&#x5236;&#x4E00;&#x4E2A;&#x586B;&#x5145;&#x4E3A;RGB(60,38,99)&#x7684;&#x77E9;&#x5F62;
+</code></pre>
+    <p>
+        以上虽然能实现看到先前绘制的矩形，但是我想要的是<strong>颜色透明</strong>。显然方法一是不能满足我的，找了很多资料<strong>并没有解决，希望看到的网友能赐教，感谢！！！</strong>
+        颜色透明实现不了那我们更换思路，添加背景色。
+        #方法二
+        使用函数SetBkColor，SetBkMode设置整个窗口的背景色。SetBkColor是背景颜色，SetBkMode是背景模式。</p>
+    <pre><code class="language-C++">// SetMode &#x6A21;&#x5F0F;
+SetBkColor(hdc, RGB(255, 255, 0));
+SetBkMode(hdc, TRANSPARENT);
+TextOutA(hdc, 256, 24, &#x22;hello world&#x22;, 11);
+// &#x975E;SetMode&#x6A21;&#x5F0F;
+SetBkColor(hdc, RGB(255, 255, 0));
+// SetBkMode(hdc, TRANSPARENT);
+TextOutA(hdc, 256, 24, &#x22;hello world&#x22;, 11);
+</code></pre>
+    <p>注意：此方法只能用于文本，填充画刷和画笔不是实线时。看下图
+        <img src="https://upload-images.jianshu.io/upload_images/13978841-aedeb4fbe9340ba8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+             alt="ponglyon.png"></p>
+    <p>测试代码：</p>
+    <pre><code class="language-C++">//setp2
+SetBkColor(hdc, RGB(255, 255, 0));
+TextOutA(hdc, 0, 600, &#x22;hello world&#x22;, strlen(&#x22;hello world&#x22;));
+//SetBkMode(hdc, OPAQUE);
+//1.&#x7528;m_brush&#x586B;&#x5145;&#x77E9;&#x5F62;
+static HBRUSH m_brush;&#x9;//&#x753B;&#x5237;&#x53E5;&#x67C4; &#x7528;&#x6765;&#x586B;&#x5145;&#x56FE;&#x5F62;
+m_brush = CreateHatchBrush(HS_BDIAGONAL, RGB(255, 255, 255));
+RECT rect;
+rect.top = 600;
+rect.left = 100;
+rect.right = 100 + 100;
+rect.bottom = 600 + 100;
+FillRect(hdc, &#x26;rect, m_brush);
+//2.&#x7528;&#x865A;&#x7EBF;&#x753B;&#x7B14;&#x753B;&#x4E00;&#x6761;&#x76F4;&#x7EBF;
+HPEN hPen;
+hPen = CreatePen(PS_DASH, 1, RGB(0, 255, 0));
+SelectObject(hdc, hPen);
+MoveToEx(hdc, 300, 600, NULL);
+LineTo(hdc, 400, 0);
+</code></pre>
+    <p>方法二会将整个窗口添加上背景色，不理想。
+        #方法三
+        FillRect()函数:用指定的画刷填充矩形， 函数包括矩形的左上边界，但不包括矩形的右下边界。</p>
+    <pre><code class="language-C++">RECT rect;
+rect.top = one_w;
+rect.left = y;
+rect.right = one_w + 100;
+rect.bottom = y+ 100;
+static HBRUSH m_brush;&#x9;//&#x753B;&#x5237;&#x53E5;&#x67C4; &#x7528;&#x6765;&#x586B;&#x5145;&#x56FE;&#x5F62;
+m_brush = CreateHatchBrush(HS_BDIAGONAL, RGB(255, 255, 0));
+FillRect(hdc, &#x26;rect, m_brush);
+</code></pre>
+    <p><strong>在线求更完美创建透明颜色画刷的方法！！！</strong></p>
+</div>

@@ -1,0 +1,29 @@
+<div id="markdown-body" class="m-content-container markdown-body"><h2 id="一、安装gcc">一、安装gcc</h2>
+    <pre><code>// su&#x547D;&#x4EE4;&#x767B;&#x9646;root&#x7528;&#x6237;, &#x4F7F;&#x7528;yum&#x5B89;&#x88C5;
+yum -y install gcc gcc-c++ kernel-devel //&#x5B89;&#x88C5;gcc&#x3001;c++&#x7F16;&#x8BD1;&#x5668;&#x4EE5;&#x53CA;&#x5185;&#x6838;&#x6587;&#x4EF6; 
+service network restart // &#x91CD;&#x542F;&#x7F51;&#x7EDC;&#x670D;&#x52A1;
+// &#x7B49;&#x5F85;&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#xFF0C;&#x9A8C;&#x8BC1;&#x662F;&#x5426;&#x5B89;&#x88C5;&#x6210;&#x529F;
+gcc -v
+</code></pre>
+    <ul>
+        <li>错误信息记录：
+            1、没有启用网络连接安装gcc时提示 ： could not retrieve mirrorlist ......
+            解决方案：
+        </li>
+    </ul>
+    <pre><code>ping 127.0.0.1 // &#x6B63;&#x5E38;
+ping&#xA0;www.baidu.com // &#x9519;&#x8BEF;
+// &#x6CA1;&#x6709;&#x542F;&#x7528;&#x8054;&#x7F51;&#x529F;&#x80FD;;
+vi /etc/sysconfig/network-scripts/ifcfg-ens33
+// &#x4FEE;&#x6539;&#x914D;&#x7F6E;ONBOOT=no-----&#x3E;ONBOOT=yes
+// wq&#x4FDD;&#x5B58;&#x9000;&#x51FA;
+</code></pre>
+    <h2 id="二、创建第一个c文件并运行">二、创建第一个C文件并运行</h2>
+    <pre><code>touch test.c // &#x521B;&#x5EFA;c&#x6587;&#x4EF6;
+vi test.c // &#x7F16;&#x8F91;c&#x6587;&#x4EF6;&#x5E76;&#x4FDD;&#x5B58;&#x9000;&#x51FA;
+
+// &#x7F16;&#x8BD1;&#x5E76;&#x8FD0;&#x884C;
+// &#x8F93;&#x5165; gcc -o &#x6587;&#x4EF6;&#x540D;(&#x65E0;&#x540E;&#x7F00;) &#x6587;&#x4EF6;&#x540D;(&#x6709;&#x540E;&#x7F00;) &#x5E76;&#x56DE;&#x8F66;
+gcc -0 test test.c 
+</code></pre>
+</div>

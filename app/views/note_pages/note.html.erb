@@ -1,0 +1,108 @@
+
+<div class="g-doc">
+
+  <div class="m-aside">
+    <div class="m-summary" id="js-menu">
+      <!--                分类-->
+      <div class="m-summary-content" id="js-menu-content">
+
+        <div class="m-summary-block">
+          <div class="m-summary-title">Linux</div>
+          <ul class="m-summary-list indent"><li class="item">
+            <%= link_to "CentOS 7安装gcc,并编辑运行第一个C程序", "/note/documents/15ce13b9e8d36381b12cd8f381d43536", class: "href" %>
+          </li></ul>
+        </div>
+
+        <div class="m-summary-block">
+          <div class="m-summary-title">C/C++</div>
+          <ul class="m-summary-list indent">
+          </ul>
+        </div>
+
+        <div class="m-summary-block">
+          <div class="m-summary-title">Git</div>
+          <ul class="m-summary-list indent">
+            <li class="item">
+              <%= link_to "SourceTree提示Authentication failed for 的解决方案", "/note/documents/f8f2f9aedd2df5c4a0aa663c3567a148", class: "href" %>
+            </li>
+
+            <li class="item">
+              <%= link_to "Git错误信息解决记录", "/note/documents/4ad587f95fc02cf0c074fbd61ae3a23f", class: "href" %>
+            </li>
+          </ul>
+        </div>
+
+        <div class="m-summary-block">
+          <div class="m-summary-title">Windows程序开发</div>
+          <ul class="m-summary-list indent">
+            <li class="item">
+              <%= link_to "如何在Windows窗口中插入图片", "/note/documents/1f492b75971f79736d78b0c0f235fcaa", class: "href" %>
+            </li>
+            <li class="item">
+              <%= link_to "C++  socket网络编程", "/note/documents/cb2130a84b2edb2b4e840e7b003e553a", class: "href" %>
+            </li>
+            <li class="item">
+              <%= link_to "MFC中创建透明画刷", "/note/documents/3fe92390c76e458dd1cd2b57e04dec93", class: "href" %>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <div class="m-summary-switch" id="js-summary-switch">
+      <svg viewBox="0 0 926.23699 573.74994" version="1.1" x="0px" y="0px" width="15" height="15" class="bottom">
+        <g transform="translate(904.92214,-879.1482)">
+          <path d="m -673.67664,1221.6502 -231.2455,-231.24803 55.6165,-55.627 c 30.5891,-30.59485 56.1806,-55.627 56.8701,-55.627 0.6894,0 79.8637,78.60862 175.9427,174.68583 l 174.6892,174.6858 174.6892,-174.6858 c 96.079,-96.07721 175.253196,-174.68583 175.942696,-174.68583 0.6895,0 26.281,25.03215 56.8701,55.627 l 55.6165,55.627 -231.245496,231.24803 c -127.185,127.1864-231.5279,231.248 -231.873,231.248 -0.3451,0 -104.688,-104.0616 -231.873,-231.248 z" fill="#fff"></path>
+        </g>
+      </svg>
+      <svg viewBox="0 0 926.23699 573.74994" version="1.1" x="0px" y="0px" width="15" height="15" class="top">
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="aaa" fill="#fff" fill-rule="nonzero">
+            <path d="M231.2455,342.502 L0,111.25397 L55.6165,55.62697 C86.2056,25.03212 111.7971,-2.99999998e-05 112.4866,-2.99999998e-05 C113.176,-2.99999998e-05 192.3503,78.60859 288.4293,174.6858 L463.1185,349.3716 L637.8077,174.6858 C733.8867,78.60859 813.060896,-2.99999997e-05 813.750396,-2.99999997e-05 C814.439896,-2.99999997e-05 840.031396,25.03212 870.620496,55.62697 L926.236996,111.25397 L694.9915,342.502 C567.8065,469.6884 463.4636,573.75 463.1185,573.75 C462.7734,573.75 358.4305,469.6884 231.2455,342.502 Z" id="Shape" transform="translate(463.118498, 286.874985) scale(1, -1) translate(-463.118498, -286.874985) "></path>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="m-main" id="js-panel">
+    <header class="m-header" id="js-header">
+
+      <div class="m-header-title js-logo">
+        <a href="/note" target="_self">
+          <%= image_tag("dog@1x.png", alt: "Lyons", width: "36") %>
+          <h6 class="name">YDoc</h6>
+        </a>
+      </div>
+      <div>
+        <div class="m-search">
+          <div class="icon">&#xf0fd;</div>
+          <input type="text" class="input js-input" placeholder="搜索"/>
+          <div class="m-search-result js-search-result"></div>
+        </div>
+      </div>
+
+      <nav class="m-header-nav js-nav">
+        <ul class="m-header-items">
+          <li class="item "><%= link_to "documents", "/note/documents", class: "href" %></li>
+          <li class="item "><%= link_to "about", "nts", class: "href" %></li>
+        </ul>
+      </nav>
+
+      <div id="js-nav-btn" class="m-header-btn ui-font-ydoc"></div>
+    </header>
+
+    <div class="m-content" id="js-content">
+
+      <%= @file_text.html_safe %>
+
+      <div class="m-content-container m-paging">
+        <div class="m-paging-prev m-paging-item">
+          <a href="env.html" class="href"><span class="ui-font-ydoc"></span>env</a></div>
+        <div class="m-paging-next m-paging-item">
+          <a href="git_1.html" class="href">git<span class="ui-font-ydoc"></span></a></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div></div>

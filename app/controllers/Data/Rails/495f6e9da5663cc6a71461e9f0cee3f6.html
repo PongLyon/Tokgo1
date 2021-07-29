@@ -1,0 +1,38 @@
+<div id="markdown-body" class="m-content-container markdown-body"><p>#Ruby on Rails部署</p>
+    <p>今天开始部署我的rails项目。下面记录整个过程：</p>
+    <ol>
+        <li>把gem source改成淘宝镜像以提高rails安装速度</li>
+    </ol>
+    <pre><code>&#xA0; &#xA0; $ gem source -r https://rubygems.org/
+&#xA0; &#xA0; $ gem source -a https://ruby.taobao.org
+</code></pre>
+    <p>2.安装Nginx</p>
+    <pre><code>    $ yum install nginx
+</code></pre>
+    <p>3.安装Unicorn</p>
+    <pre><code>    $ gem install unicorn
+</code></pre>
+    <p>#####配置Nginx与Unicorn</p>
+    <blockquote>
+        <p>在rails项目的根目录中找到文件夹config，在里面创建文件unicorn.rb并写如下内容:<img
+                src="https://upload-images.jianshu.io/upload_images/13978841-49db118d14d6d691.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+                alt="unicorn.rb">
+            <strong>配置Nginx与Unicorn之间的通讯</strong></p>
+        <p>执行以下命令进入nginx目录并找到nginx.conf文件</p>
+        <pre><code>$ cd /etc/nginx  #&#x4E00;&#x822C;nginx&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x6240;&#x5728;&#x8DEF;&#x5F84;&#xFF0C;&#x4E0D;&#x719F;&#x6089;linux&#x7684;&#x7AE5;&#x978B;&#x53EF;&#x4EE5;&#x7528;whereis nginx&#x547D;&#x4EE4;&#x6765;&#x5BFB;&#x627E;&#x8DEF;&#x5F84;
+$ vim nginx.conf  #&#x67E5;&#x770B;nginx.conf&#x6587;&#x4EF6;
+</code></pre>
+        <p>进入nginx.conf文件后按 i 开始编辑，修改以下内容:<img
+                src="https://upload-images.jianshu.io/upload_images/13978841-168e3b79cb3140a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
+                alt="nginx.conf">
+            现在可以输入rails server让 rails 项目跑起来了!</p>
+    </blockquote>
+    <p>进入rails项目目录，输入</p>
+    <pre><code>&#xA0; &#xA0; $ RAILS_ENV=production bundle exec rake assets:precompile&#xA0; #&#x8FD9;&#x4E00;&#x6B65;&#x4E0D;&#x53EF;&#x5C11;&#xFF0C;&#x4E0D;&#x7136;asset pipeline&#x4E0D;&#x5DE5;&#x4F5C;
+</code></pre>
+    <p>启动Unicorn和Nginx</p>
+    <pre><code>&#xA0; &#xA0; $ unicorn_rails -c config/unicorn.rb -D -E production
+&#xA0; &#xA0; $ service nginx start
+</code></pre>
+    <p>部署完成了~</p>
+</div>

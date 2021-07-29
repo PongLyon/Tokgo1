@@ -1,0 +1,188 @@
+<div id="markdown-body" class="m-content-container markdown-body"><p>#C++ socket网络编程</p>
+    <blockquote>
+        <h3 id="socket介绍：">Socket介绍：</h3>
+        <blockquote>
+            <p>
+                #####socket即套接字，端口号拼接到IP地址就构成了套接字。如果IP地址是169.254.24，而端口号是3000，那么得到套接字就是（169.254.24:3000），即（主机IP地址：端口号）。
+                #####三种不同类型的套接字：
+                #####1、
+                (SOCK-STREAM)流式套接字：提供一种可靠的、面向连接的双向数据传输服务，实现了数据无差错、无重复的发送。发送大批量的数据或者对数据传输有较高的要求时，可以使用流式套接字。
+                #####2、 (SOCK-DGRAM)数据报套接字：
+                提供一种无连接、不可靠的双向数据传输服务。数据包以独立的形式被发送，数据在传输过程中可能会丢失或重复，并且不能保证在接收端按发送顺序接收数据。出现差错的可能性较小或允许部分传输出错的应用场合，可以使用数据报套接字。
+                #####3、(SOCK-RAW)原始套接字：该套接字允许对较低层协议（如IP或ICMP）进行直接访问，常用于网络协议分析，检验新的网络协议实现，也可用于测试新配置或安装的网络设备。</p>
+        </blockquote>
+        <h3 id="客户端服务端模式：">客户端/服务端模式：</h3>
+        <blockquote>
+            <p>#####网络架构使用客户端(Client)-服务器(Server)模式（简称C/S），即客户端向服务器发出请求，服务器接收请求后，提供相应的服务。
+                #####服务端：建立socket，声明自身的端口号和地址并绑定到socket，使用listen打开监听，然后不断用accept去查看是否有连接，如果有，捕获socket，并通过recv获取消息的内容，通信完成后调用closeSocket关闭这个对应accept到的socket，如果不再需要等待任何客户端连接，那么用closeSocket关闭掉自身的socket。
+                #####客户端：建立socket，通过端口号和地址确定目标服务器，使用Connect连接到服务器，send发送消息，等待处理，通信完成后调用closeSocket关闭socket。</p>
+        </blockquote>
+        <h3 id="tcp编程步骤：">TCP编程步骤：</h3>
+        <blockquote>
+            <p>一、服务端</p>
+            <blockquote>
+                <p>#####1、加载套接字库，创建套接字（WSAStartup()/socket()）;
+                    #####2、绑定套接字到一个IP地址和一个端口上（bind()）;
+                    #####3、将套接字设置为监听模式等待连接请求（listen()）；
+                    #####4、请求到来后，接受连接请求，返回一个新的对应于此次连接的套接字（accept()）；
+                    #####5、用返回的套接字和客户端进行通信（send()/recv()）；
+                    #####6、返回，等待另一个连接请求；
+                    #####7、关闭套接字，关闭加载的套接字库（closesocket()/WSACleanup()）；
+                    二、客户端
+                    #####1、加载套接字库，创建套接字（WSAStartup()/socket()）；
+                    #####2、向服务器发出连接请求（connect()）；
+                    #####3、和服务器进行通信（send()/recv()）；
+                    #####4、关闭套接字，关闭加载的套接字库（closesocket()/WSACleanup()）；</p>
+            </blockquote>
+        </blockquote>
+        <h3 id="tcp服务端代码">TCP服务端代码</h3>
+    </blockquote>
+    <pre><code class="language-c++">#include &#x22;pch.h&#x22;
+#include &#x3C;iostream&#x3E; 
+#include &#x3C;winsock2.h&#x3E;  
+ 
+#pragma comment(lib,&#x22;ws2_32.lib&#x22;)  
+using namespace std;
+ 
+int main(int argc, char* argv[])
+{
+&#x9;//&#x521D;&#x59CB;&#x5316;WSA  
+&#x9;WORD sockVersion = MAKEWORD(2, 2);
+&#x9;WSADATA wsaData;
+&#x9;if (WSAStartup(sockVersion, &#x26;wsaData) != 0)
+&#x9;{
+&#x9;&#x9;return 0;
+&#x9;}
+ 
+&#x9;//&#x521B;&#x5EFA;&#x5957;&#x63A5;&#x5B57;  
+&#x9;SOCKET slisten = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+&#x9;if (slisten == INVALID_SOCKET)
+&#x9;{
+&#x9;&#x9;cout &#x3C;&#x3C; &#x22;create socket error !&#x22; &#x3C;&#x3C; endl;
+&#x9;&#x9;return 0;
+&#x9;}
+ 
+&#x9;//&#x7ED1;&#x5B9A;IP&#x548C;&#x7AEF;&#x53E3;  
+&#x9;sockaddr_in sin;
+&#x9;sin.sin_family = AF_INET;
+&#x9;sin.sin_port = htons(8888);
+&#x9;sin.sin_addr.S_un.S_addr = INADDR_ANY;
+&#x9;if (bind(slisten, (LPSOCKADDR)&#x26;sin, sizeof(sin)) == SOCKET_ERROR)
+&#x9;{
+&#x9;&#x9;cout &#x3C;&#x3C; &#x22;bind error !&#x22; &#x3C;&#x3C; endl;
+&#x9;}
+ 
+&#x9;//&#x5F00;&#x59CB;&#x76D1;&#x542C;  
+&#x9;if (listen(slisten, 5) == SOCKET_ERROR)
+&#x9;{
+&#x9;&#x9;cout &#x3C;&#x3C; &#x22;listen error !&#x22; &#x3C;&#x3C; endl;
+&#x9;&#x9;return 0;
+&#x9;}
+ 
+&#x9;//&#x5FAA;&#x73AF;&#x63A5;&#x6536;&#x6570;&#x636E;  
+&#x9;SOCKET sClient;
+&#x9;sockaddr_in remoteAddr;
+&#x9;int nAddrlen = sizeof(remoteAddr);
+&#x9;char revData[255];
+&#x9;while (true)
+&#x9;{
+&#x9;&#x9;cout &#x3C;&#x3C; &#x22;&#x963B;&#x585E;&#x3002;&#x3002;&#x3002;&#x3002;&#x7B49;&#x5F85;&#x8FDE;&#x63A5;&#x3002;&#x3002;&#x3002;&#x22; &#x3C;&#x3C; endl;
+&#x9;&#x9;sClient = accept(slisten, (SOCKADDR *)&#x26;remoteAddr, &#x26;nAddrlen);
+&#x9;&#x9;if (sClient == INVALID_SOCKET)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;cout &#x3C;&#x3C; &#x22;accept error !&#x22; &#x3C;&#x3C; endl;
+&#x9;&#x9;&#x9;continue;
+&#x9;&#x9;}
+ 
+&#x9;&#x9;cout &#x3C;&#x3C; &#x22;&#x63A5;&#x53D7;&#x5230;&#x4E00;&#x4E2A;&#x8FDE;&#x63A5;&#xFF1A;&#x22; &#x3C;&#x3C; inet_ntoa(remoteAddr.sin_addr) &#x3C;&#x3C; endl;
+ 
+&#x9;&#x9;//&#x63A5;&#x6536;&#x6570;&#x636E;  
+&#x9;&#x9;int ret = recv(sClient, revData, 255, 0);
+&#x9;&#x9;if (ret &#x3E; 0)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;revData[ret] = 0x00;
+&#x9;&#x9;&#x9;printf(revData);
+&#x9;&#x9;}
+ 
+&#x9;&#x9;//&#x53D1;&#x9001;&#x6570;&#x636E;  
+&#x9;&#x9;const char * sendData = &#x22;&#x4F60;&#x597D;&#xFF0C;TCP&#x5BA2;&#x6237;&#x7AEF;&#xFF01;\n&#x22;;
+&#x9;&#x9;send(sClient, sendData, strlen(sendData), 0);
+&#x9;&#x9;closesocket(sClient);
+&#x9;}
+ 
+&#x9;closesocket(slisten);
+&#x9;WSACleanup();
+&#x9;return 0;
+}
+</code></pre>
+    <blockquote>
+        <h3 id="tcp客户端代码">TCP客户端代码</h3>
+    </blockquote>
+    <pre><code class="language-c++">#include &#x22;stdafx.h&#x22;
+#include&#x3C;winsock2.h&#x3E;
+#include&#x3C;iostream&#x3E;
+#include&#x3C;string&#x3E;
+ 
+using namespace std;
+#pragma comment(lib, &#x22;ws2_32.lib&#x22;)
+ 
+int main()
+{
+&#x9;WORD sockVersion = MAKEWORD(2, 2);
+&#x9;WSADATA data;
+&#x9;if (WSAStartup(sockVersion, &#x26;data) != 0)
+&#x9;{
+&#x9;&#x9;return 0;
+&#x9;}
+ 
+&#x9;while (true) 
+&#x9;{
+&#x9;&#x9;SOCKET sclient = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+&#x9;&#x9;if (sclient == INVALID_SOCKET)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;cout &#x3C;&#x3C; &#x22;invalid socket!&#x22; &#x3C;&#x3C; endl;
+&#x9;&#x9;&#x9;return 0;
+&#x9;&#x9;}
+ 
+&#x9;&#x9;sockaddr_in serAddr;
+&#x9;&#x9;serAddr.sin_family = AF_INET;
+&#x9;&#x9;serAddr.sin_port = htons(8888);
+&#x9;&#x9;serAddr.sin_addr.S_un.S_addr = inet_addr(&#x22;127.0.0.1&#x22;);
+&#x9;&#x9;if (connect(sclient, (sockaddr *)&#x26;serAddr, sizeof(serAddr)) == SOCKET_ERROR)
+&#x9;&#x9;{  
+&#x9;&#x9;&#x9;//&#x8FDE;&#x63A5;&#x5931;&#x8D25; 
+&#x9;&#x9;&#x9;cout &#x3C;&#x3C; &#x22;connect error !&#x22; &#x3C;&#x3C; endl;
+&#x9;&#x9;&#x9;closesocket(sclient);
+&#x9;&#x9;&#x9;return 0;
+&#x9;&#x9;}
+ 
+&#x9;&#x9;string data;
+&#x9;&#x9;cin &#x3E;&#x3E; data;
+&#x9;&#x9;const char * sendData;
+&#x9;&#x9;sendData = data.c_str();   //string&#x8F6C;const char* 
+&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   
+&#x9;&#x9;/*
+&#x9;&#x9;send()&#x7528;&#x6765;&#x5C06;&#x6570;&#x636E;&#x7531;&#x6307;&#x5B9A;&#x7684;socket&#x4F20;&#x7ED9;&#x5BF9;&#x65B9;&#x4E3B;&#x673A;
+&#x9;&#x9;int send(int s, const void * msg, int len, unsigned int flags)
+&#x9;&#x9;    s&#x4E3A;&#x5DF2;&#x5EFA;&#x7ACB;&#x597D;&#x8FDE;&#x63A5;&#x7684;socket&#xFF0C;msg&#x6307;&#x5411;&#x6570;&#x636E;&#x5185;&#x5BB9;&#xFF0C;len&#x5219;&#x4E3A;&#x6570;&#x636E;&#x957F;&#x5EA6;&#xFF0C;&#x53C2;&#x6570;flags&#x4E00;&#x822C;&#x8BBE;0
+&#x9;&#x9;    &#x6210;&#x529F;&#x5219;&#x8FD4;&#x56DE;&#x5B9E;&#x9645;&#x4F20;&#x9001;&#x51FA;&#x53BB;&#x7684;&#x5B57;&#x7B26;&#x6570;&#xFF0C;&#x5931;&#x8D25;&#x8FD4;&#x56DE;-1&#xFF0C;&#x9519;&#x8BEF;&#x539F;&#x56E0;&#x5B58;&#x4E8E;error
+&#x9;&#x9;*/
+&#x9;&#x9;send(sclient, sendData, strlen(sendData), 0);
+&#x9;&#x9;
+&#x9;&#x9;char recData[255];
+&#x9;&#x9;int ret = recv(sclient, recData, 255, 0);
+&#x9;&#x9;if (ret&#x3E;0)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;recData[ret] = 0x00;
+&#x9;&#x9;&#x9;cout &#x3C;&#x3C; recData &#x3C;&#x3C; endl;
+&#x9;&#x9;}
+&#x9;&#x9;closesocket(sclient);
+&#x9;}
+ 
+&#x9;WSACleanup();
+ 
+&#x9;system(&#x22;pause&#x22;);
+&#x9;return 0;
+}
+</code></pre>
+</div>

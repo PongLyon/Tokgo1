@@ -1,0 +1,88 @@
+<div id="markdown-body" class="m-content-container markdown-body">
+    <p>#如何在Windows窗口中插入图片
+        然后显示图片需要写在WM_PAINT消息里：</p>
+    <p>首选使用函数LoadImage载入位图或图标。</p>
+    <p>hb_icon = (HBITMAP)::LoadImage(hInst, _TEXT(&quot;icon.bmp&quot;), IMAGE_BITMAP, 36, 36,
+        LR_CREATEDIBSECTION | LR_DEFAULTSIZE | LR_LOADFROMFILE);</p>
+    <pre><code>HDC hMemDC = CreateCompatibleDC(hdc); //创建内存DC
+
+::SelectObject(hMemDC, hb_icon); //把位图选进内存DC
+
+BitBlt(hdc, 0, 0, 35, 35, hMemDC, 0, 0, SRCCOPY); //内存DC映射到屏幕DC
+</code></pre>
+    <p>列子</p>
+    <p>LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)</p>
+    <p>{</p>
+    <pre><code>switch (message)
+
+{
+
+case WM_COMMAND:
+
+    {
+
+        HWND wmId = (HWND)LOWORD(lParam);
+
+        switch(LOWORD(wParam)){
+
+        case IDM_ABOUT:
+
+            DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+
+            break;
+
+        case IDM_EXIT:
+
+            DestroyWindow(hWnd);
+
+            break;
+
+        default:
+
+            return DefWindowProc(hWnd, message, wParam, lParam);
+
+        }
+</code></pre>
+    <p>break;</p>
+    <pre><code>    }
+
+case WM_PAINT:
+
+    {
+
+        PAINTSTRUCT ps;
+
+        HDC hdc = BeginPaint(hWnd, &amp;ps);
+
+    su_icon = (HBITMAP)::LoadImage(hInst, _TEXT(&quot;icon.bmp&quot;), IMAGE_BITMAP, 36, 36, LR_CREATEDIBSECTION | LR_DEFAULTSIZE | LR_LOADFROMFILE);
+
+        //绘制图标
+
+        HDC hMemDC = CreateCompatibleDC(hdc); //创建内存DC
+
+        ::SelectObject(hMemDC, su_icon); //把位图选进内存DC
+
+        BitBlt(hdc, 10, 75, 35, 35, hMemDC, 0, 0, SRCCOPY); //内存DC映射到屏幕DC
+
+        EndPaint(hWnd, &amp;ps);
+
+        break;
+
+    }
+
+case WM_DESTROY:
+
+    PostQuitMessage(0);
+
+    break;
+
+default:
+
+    return DefWindowProc(hWnd, message, wParam, lParam);
+
+}
+
+return 0;
+</code></pre>
+    <p>}</p>
+</div>

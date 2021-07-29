@@ -1,0 +1,86 @@
+
+<% provide(:title, "Home") %>
+
+<div class="g-doc">
+  <div class="m-main" id="js-panel">
+    <header class="m-header" id="js-header">
+
+      <div class="m-header-title js-logo">
+        <a href="" target="_self">
+          <%= image_tag("dog@1x.png", alt: "Lyons", width: "36") %>
+          <h6 class="name">YDoc</h6>
+        </a>
+      </div>
+      <div>
+        <div class="m-search">
+          <div class="icon">&#xf0fd;</div>
+          <input type="text" class="input js-input" placeholder="搜索"/>
+          <div class="m-search-result js-search-result"></div>
+        </div>
+      </div>
+
+      <nav class="m-header-nav js-nav">
+        <ul class="m-header-items">
+          <li class="item "><%= link_to "documents", "/note/documents", class: "href" %></li>
+          <li class="item "><%= link_to "about", "nts", class: "href" %></li>
+        </ul>
+      </nav>
+
+      <div id="js-nav-btn" class="m-header-btn ui-font-ydoc"></div>
+    </header>
+
+    <div class="m-content" id="js-content">
+      <div id="markdown-body" class="m-content-container markdown-body"><h1>首页使用 markdown</h1>
+        <p>默认主题的首页使用的是 jsx 文件，这个文件可以替换成 markdown/html 文件。</p>
+        <h2 id="用法">用法</h2>
+        <p>删除 <code>examples/homepage/docs/</code> 目录下的 <code>index.jsx</code> 文件，然后在这个目录下新建 <code>index.md</code>
+          文件，随意写一些内容。</p>
+        <p>然后执行：</p>
+        <pre><code>ydoc build
+</code></pre>
+        <p>即可看到首页已经换成了 markdown 文件中编写的内容啦，<strong>html 文件也是同理</strong></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div></div>
+<!--<script>-->
+<!--    var $content = document.getElementById('js-content');-->
+<!--    var $summaryItems = Array.prototype.slice.call(document.querySelectorAll('#js-menu .href'));-->
+<!--    var $menu = document.getElementById('js-menu');-->
+<!--    if (sessionStorage.prevPathname) {-->
+<!--        sessionStorage.setItem('prevPrevPathname', sessionStorage.prevPathname);-->
+<!--        sessionStorage.setItem('prevPrevMenuScrollTop', sessionStorage.prevMenuScrollTop);-->
+<!--        sessionStorage.setItem('prevPrevContentScrollTop', sessionStorage.prevContentScrollTop);-->
+<!--    }-->
+<!--    if (sessionStorage.locationPathname) {-->
+<!--        sessionStorage.setItem('prevPathname', sessionStorage.locationPathname);-->
+<!--        sessionStorage.setItem('prevMenuScrollTop', sessionStorage.menuScrollTop);-->
+<!--        sessionStorage.setItem('prevContentScrollTop', sessionStorage.contentScrollTop);-->
+<!--    }-->
+<!--    if ($menu && sessionStorage.menuScrollTop) {-->
+<!--        $menu.scrollTop = sessionStorage.menuScrollTop;-->
+<!--    }-->
+<!--    // 刷新页面但不切换 pathname 的时候，内容区恢复到记忆的高度-->
+<!--    if ($content && sessionStorage.contentScrollTop && window.location.pathname == sessionStorage.locationPathname) {-->
+<!--        $content.scrollTop = sessionStorage.contentScrollTop;-->
+<!--    } else if (sessionStorage.prevPrevPathname && sessionStorage.prevPrevPathname === window.location.pathname) {-->
+<!--        if ($menu && sessionStorage.prevPrevMenuScrollTop) {-->
+<!--            $menu.scrollTop = sessionStorage.prevPrevMenuScrollTop;-->
+<!--        }-->
+<!--        if ($content && sessionStorage.prevPrevContentScrollTop) {-->
+<!--            $content.scrollTop = sessionStorage.prevPrevContentScrollTop;-->
+<!--        }-->
+<!--    }-->
+<!--    sessionStorage.setItem('locationPathname', window.location.pathname);-->
+<!--</script>-->
+<!--<script src="ydoc\scripts\plugins\dollar.min.js"></script>-->
+<!--<script src="ydoc\scripts\plugins\responsive-nav.min.js"></script>-->
+<!--<script src="ydoc\scripts\plugins\slideout.min.js"></script>-->
+<!--<script src="ydoc\scripts\app.js"></script>-->
+<!--<script src="ydoc\ydoc-plugin-search\core.js"></script>-->
+<!--<script src="ydoc\ydoc-plugin-search\search.js"></script>-->
+<!--<script src="search_json.js"></script>-->
+<!--</body>-->
+<!--</html>-->

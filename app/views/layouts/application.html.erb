@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <!--    Edge 模式通知 Windows Internet Explorer 以最高级别的可用模式显示内容，这实际上破坏了“锁定”模式。-->
+    <!--    即如果你有IE9的话说明你有IE789，那么就调用高版本的那个也就是IE9。-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<!--   content="no" content="yes" 删除和显示默认的苹果工具栏和菜单栏。-->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+<!--    apple-mobile-web-app-capable和apple-mobile-web-app-status-bar-style，这两个会让网页内容以应用程序风格显示，并使状态栏透明。-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+
+<!--    <link rel="apple-touch-icon" sizes="180x180" href="ydoc\images\apple-touch-icon.png"/>-->
+    <%#= favicon_link_tag 'apple-touch-icon.png', rel: 'apple-touch-icon' %>
+<!--    <link rel="icon" type="image/png" sizes="32x32" href="ydoc\images\favicon-32x32.png"/>-->
+    <%= favicon_link_tag 'favicon-32x32.png', rel: 'icon', type: 'image/png', sizes: '32x32' %>
+    <!--    <link rel="icon" type="image/png" sizes="16x16" href="ydoc\images\favicon-16x16.png"/>-->
+    <%= favicon_link_tag 'favicon-16x16.png', rel: 'icon', type: 'image/png', sizes: '16x16' %>
+<!--    <link rel="manifest" href="ydoc\images\manifest.json"/> manifest是HTML5引入的应用程序缓存，即在没有网络的情况下可以进行访问，-->
+<!--    <link rel="mask-icon" href="ydoc\images\safari-pinned-tab.svg" color="#5bbad5"/>-->
+    <meta name="theme-color" content="#ffffff"/>
+    <meta http-equiv="Cache-Control" content="no-transform"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+
+    <!--    指的是我这文件是用什么来生成的-->
+<!--    <meta name="generator" content="Mobirise v5.3.5, mobirise.com">-->
+<!--    为网页标题加图标,type可以设置多种图片类型。如：gif/png/ico,一般的图标尺寸都是16px*16px-->
+<!--    <link rel="shortcut icon" href="logo.png" type="image/x-icon">-->
+    <%#= favicon_link_tag 'logo.png' %>
+<!--    <link rel="preload" as="style" href="mbr-additional.css">-->
+
+
+    <title><%= full_title(yield(:title)) %></title>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
