@@ -1,34 +1,89 @@
 <div id="markdown-body" class="m-content-container markdown-body">
-    <p>#SourceTree提示Authentication failed for
-        的解决方案</p>
-    <p>从远端拉取拉取失败，sourcetree提示Authentication failed（下图）
-        <img src="https://upload-images.jianshu.io/upload_images/13978841-af285044ef0525a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
-             alt="image.png">
-        我在解决此问题的过程中掌握了三个方案。
-        #方案一：
-        在控制台输入下面命令，移除凭证。接下来就会弹出一个小窗口，提示你输入密码。</p>
-    <pre><code> git config --system --unset credential.helper
+
+<section class="ouvJEz"><h1 class="_1RuRku">SourceTree提示Authentication failed for 的解决方案</h1>
+    <article class="_2rhmJa"><p>从远端拉取拉取失败，sourcetree提示Authentication failed（下图）</p>
+        <br>
+        <div class="image-package">
+            <div class="image-container" style="max-width: 540px; max-height: 174px;">
+                <div class="image-container-fill" style="padding-bottom: 32.22%;"></div>
+                <div class="image-view" data-width="540" data-height="174"><img
+                        src="http://qiniu.ponglyon.com/upload_images/git/f8f2f9aedd2df5c4a0aa663c3567a148001.png"
+                        data-original-width="540" data-original-height="174"
+                        data-original-format="image/png" data-original-filesize="16263"></div>
+            </div>
+            <div class="image-caption">image.png</div>
+        </div>
+        <br>
+        <p>我在解决此问题的过程中掌握了三个方案。</p>
+
+        <h1>方案一：</h1>
+        <p>在控制台输入下面命令，移除凭证。接下来就会弹出一个小窗口，提示你输入密码。</p>
+        <pre><code> git config --system --unset credential.helper
 </code></pre>
-    <p>补充存储凭证命令</p>
-    <pre><code>//  &#x201C;cache&#x201D; &#x6A21;&#x5F0F;&#x4F1A;&#x5C06;&#x51ED;&#x8BC1;&#x5B58;&#x653E;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#xFF0C;&#x5E76;&#x4E14;&#x5728;15&#x5206;&#x949F;&#x540E;&#x4ECE;&#x5185;&#x5B58;&#x4E2D;&#x6E05;&#x9664;&#x3002;
+        <p>补充存储凭证命令</p>
+        <pre><code>//  “cache” 模式会将凭证存放在内存中一段时间，并且在15分钟后从内存中清除。
 git config --global credential.helper cache
-// store&#x201D; &#x6A21;&#x5F0F;&#x4F1A;&#x5C06;&#x51ED;&#x8BC1;&#x7528;&#x660E;&#x6587;&#x7684;&#x5F62;&#x5F0F;&#x5B58;&#x653E;&#x5728;&#x78C1;&#x76D8;&#x4E2D;&#xFF0C;&#x5E76;&#x4E14;&#x6C38;&#x4E0D;&#x8FC7;&#x671F;&#x3002;&#x9664;&#x975E;&#x4F60;&#x4FEE;&#x6539;&#x4E86;&#x4F60;&#x5728; Git &#x670D;&#x52A1;&#x5668;&#x4E0A;&#x7684;&#x5BC6;&#x7801;
-git config --global credential.helper &#x27;store --file ~/.my-credentials&#x27;
+// store” 模式会将凭证用明文的形式存放在磁盘中，并且永不过期。除非你修改了你在 Git 服务器上的密码
+git config --global credential.helper 'store --file ~/.my-credentials'
 </code></pre>
-    <p>#方案二：
-        找到文件目录C:\Users\PongLyon\AppData\Local\Atlassian\SourceTree 并删除passwd文件（记得把sourceTree关闭）。
-        <img src="https://upload-images.jianshu.io/upload_images/13978841-a44a2aa4f02aaac1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
-             alt="passwd.png">
-        重置之后会再次弹出身份验证窗口。<img
-                src="https://upload-images.jianshu.io/upload_images/13978841-e2cb7d80ba649452.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
-                alt="1.png">
-        <img src="https://upload-images.jianshu.io/upload_images/13978841-83fab08f70d14e51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
-             alt="2.png">
-        当你遇到像上图那样，Username输入为灰色不能输入且用户名是错误需要输入时：
-        同样打开文件目录C:\Users\PongLyon\AppData\Local\Atlassian\SourceTree。找到userhosts文件并删除，便能解决上图的问题。
-        #方案三：
-        修改凭据，效果不是很明显。
-        打开凭据管理器，选中Windows凭据找在普通凭据里找到对应的网络地址点击编辑。
-        <img src="https://upload-images.jianshu.io/upload_images/13978841-4b78f0e59a013a30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
-             alt="image.png"></p>
+        <h1>方案二：</h1>
+        <p>找到文件目录C:\Users\PongLyon\AppData\Local\Atlassian\SourceTree 并删除passwd文件（记得把sourceTree关闭）。</p>
+        <br>
+        <div class="image-package">
+            <div class="image-container" style="max-width: 700px; max-height: 509px;">
+                <div class="image-container-fill" style="padding-bottom: 45.16%;"></div>
+                <div class="image-view" data-width="1127" data-height="509"><img
+                        src="http://qiniu.ponglyon.com/upload_images/git/f8f2f9aedd2df5c4a0aa663c3567a148002.png"
+                        data-original-width="1127" data-original-height="509"
+                        data-original-format="image/png" data-original-filesize="78082"></div>
+            </div>
+            <div class="image-caption">passwd.png</div>
+        </div>
+        <br>
+        <p></p>
+        重置之后会再次弹出身份验证窗口。
+        <div class="image-package">
+            <div class="image-container" style="max-width: 486px; max-height: 203px;">
+                <div class="image-container-fill" style="padding-bottom: 41.77%;"></div>
+                <div class="image-view" data-width="486" data-height="203"><img
+                        src="http://qiniu.ponglyon.com/upload_images/git/f8f2f9aedd2df5c4a0aa663c3567a148003.png"
+                        data-original-width="486" data-original-height="203"
+                        data-original-format="image/png" data-original-filesize="11343"></div>
+            </div>
+            <div class="image-caption">1.png</div>
+        </div>
+        <br>
+        <div class="image-package">
+            <div class="image-container" style="max-width: 400px; max-height: 170px;">
+                <div class="image-container-fill" style="padding-bottom: 42.5%;"></div>
+                <div class="image-view" data-width="400" data-height="170"><img
+                        src="http://qiniu.ponglyon.com/upload_images/git/f8f2f9aedd2df5c4a0aa663c3567a148004.png"
+                        data-original-width="400" data-original-height="170"
+                        data-original-format="image/png" data-original-filesize="9934"></div>
+            </div>
+            <div class="image-caption">2.png</div>
+        </div>
+        <br>
+        当你遇到像上图那样，Username输入为灰色不能输入且用户名是错误需要输入时：<br>
+        <p>同样打开文件目录C:\Users\PongLyon\AppData\Local\Atlassian\SourceTree。找到userhosts文件并删除，便能解决上图的问题。</p>
+
+        <h1>方案三：</h1>
+        <p>修改凭据，效果不是很明显。<br>
+            打开凭据管理器，选中Windows凭据找在普通凭据里找到对应的网络地址点击编辑。</p>
+        <br>
+        <div class="image-package">
+            <div class="image-container" style="max-width: 700px; max-height: 474px;">
+                <div class="image-container-fill" style="padding-bottom: 46.2%;"></div>
+                <div class="image-view" data-width="1026" data-height="474"><img
+                        src="http://qiniu.ponglyon.com/upload_images/git/f8f2f9aedd2df5c4a0aa663c3567a148005.png"
+                        data-original-width="1026" data-original-height="474"
+                        data-original-format="image/png" data-original-filesize="37911"></div>
+            </div>
+            <div class="image-caption">image.png</div>
+        </div>
+    </article>
+    <div></div>
+    <div class="_19DgIp" style="margin-top:24px;margin-bottom:24px"></div>
+</section>
+<section class="-umr26" aria-label="baidu-ad"></section>
 </div>

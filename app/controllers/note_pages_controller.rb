@@ -6,7 +6,26 @@ class NotePagesController < ApplicationController
   end
 
   def documents()
-
+    # 获取文件信息
+    # 要测试的存储空间，并且这个资源名在存储空间中存在
+    # 抓取的 URL，需要外网可以访问到
+    target_url = 'http://qx70p8o2h.bkt.clouddn.com/dog%402x.png'
+    bucket = 'datapublic'
+    key = 'dog@2x.png'
+# 获取文件信息
+#     @code1, @resultq, @response_headersq = Qiniu::Storage.stat(
+#         bucket,     # 存储空间
+#         key         # 资源名
+#     )
+# 调用fetch方法
+    @code1, @resultq, @response_headersq = Qiniu::Storage.fetch(
+        bucket,
+        target_url,
+        key
+    )
+    puts @code1
+    puts @resultq
+    puts @response_headersq
   end
 
   def note()

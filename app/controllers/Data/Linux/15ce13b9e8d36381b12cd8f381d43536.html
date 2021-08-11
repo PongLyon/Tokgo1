@@ -1,29 +1,79 @@
-<div id="markdown-body" class="m-content-container markdown-body"><h2 id="一、安装gcc">一、安装gcc</h2>
-    <pre><code>// su&#x547D;&#x4EE4;&#x767B;&#x9646;root&#x7528;&#x6237;, &#x4F7F;&#x7528;yum&#x5B89;&#x88C5;
-yum -y install gcc gcc-c++ kernel-devel //&#x5B89;&#x88C5;gcc&#x3001;c++&#x7F16;&#x8BD1;&#x5668;&#x4EE5;&#x53CA;&#x5185;&#x6838;&#x6587;&#x4EF6; 
-service network restart // &#x91CD;&#x542F;&#x7F51;&#x7EDC;&#x670D;&#x52A1;
-// &#x7B49;&#x5F85;&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#xFF0C;&#x9A8C;&#x8BC1;&#x662F;&#x5426;&#x5B89;&#x88C5;&#x6210;&#x529F;
-gcc -v
-</code></pre>
-    <ul>
-        <li>错误信息记录：
-            1、没有启用网络连接安装gcc时提示 ： could not retrieve mirrorlist ......
-            解决方案：
-        </li>
-    </ul>
-    <pre><code>ping 127.0.0.1 // &#x6B63;&#x5E38;
-ping&#xA0;www.baidu.com // &#x9519;&#x8BEF;
-// &#x6CA1;&#x6709;&#x542F;&#x7528;&#x8054;&#x7F51;&#x529F;&#x80FD;;
-vi /etc/sysconfig/network-scripts/ifcfg-ens33
-// &#x4FEE;&#x6539;&#x914D;&#x7F6E;ONBOOT=no-----&#x3E;ONBOOT=yes
-// wq&#x4FDD;&#x5B58;&#x9000;&#x51FA;
-</code></pre>
-    <h2 id="二、创建第一个c文件并运行">二、创建第一个C文件并运行</h2>
-    <pre><code>touch test.c // &#x521B;&#x5EFA;c&#x6587;&#x4EF6;
-vi test.c // &#x7F16;&#x8F91;c&#x6587;&#x4EF6;&#x5E76;&#x4FDD;&#x5B58;&#x9000;&#x51FA;
+<div id="markdown-body" class="m-content-container markdown-body">
 
-// &#x7F16;&#x8BD1;&#x5E76;&#x8FD0;&#x884C;
-// &#x8F93;&#x5165; gcc -o &#x6587;&#x4EF6;&#x540D;(&#x65E0;&#x540E;&#x7F00;) &#x6587;&#x4EF6;&#x540D;(&#x6709;&#x540E;&#x7F00;) &#x5E76;&#x56DE;&#x8F66;
-gcc -0 test test.c 
-</code></pre>
+    <section class="ouvJEz"><h1 class="_1RuRku">CentOS 7安装gcc,并编辑运行第一个C程序</h1>
+        <article class="_2rhmJa"><h2>一、安装gcc</h2>
+            <div class="_2Uzcx_">
+                <button class="VJbwyy" type="button" aria-label="复制代码"><i aria-label="icon: copy"
+                                                                          class="anticon anticon-copy">
+                    <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="copy" width="1em" height="1em"
+                         fill="currentColor" aria-hidden="true">
+                        <path d="M832 64H296c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h496v688c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V96c0-17.7-14.3-32-32-32zM704 192H192c-17.7 0-32 14.3-32 32v530.7c0 8.5 3.4 16.6 9.4 22.6l173.3 173.3c2.2 2.2 4.7 4 7.4 5.5v1.9h4.2c3.5 1.3 7.2 2 11 2H704c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32zM350 856.2L263.9 770H350v86.2zM664 888H414V746c0-22.1-17.9-40-40-40H232V264h432v624z"></path>
+                    </svg>
+                </i></button>
+                <pre class="line-numbers  language-swift"><code class="  language-swift"><span class="token comment">// su命令登陆root用户, 使用yum安装 </span>
+yum <span class="token operator">-</span>y install gcc gcc<span class="token operator">-</span>c<span
+                            class="token operator">++</span> kernel<span class="token operator">-</span>devel <span
+                            class="token comment">//安装gcc、c++编译器以及内核文件 </span>
+service network restart <span class="token comment">// 重启网络服务</span>
+<span class="token comment">// 等待安装完成，验证是否安装成功</span>
+gcc <span class="token operator">-</span>v
+<span aria-hidden="true"
+      class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+            </div>
+            <ul>
+                <li>错误信息记录：<br>
+                    1、没有启用网络连接安装gcc时提示 ： could not retrieve mirrorlist ......<br>
+                    解决方案：
+                </li>
+            </ul>
+            <div class="_2Uzcx_">
+                <button class="VJbwyy" type="button" aria-label="复制代码"><i aria-label="icon: copy"
+                                                                          class="anticon anticon-copy">
+                    <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="copy" width="1em" height="1em"
+                         fill="currentColor" aria-hidden="true">
+                        <path d="M832 64H296c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h496v688c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V96c0-17.7-14.3-32-32-32zM704 192H192c-17.7 0-32 14.3-32 32v530.7c0 8.5 3.4 16.6 9.4 22.6l173.3 173.3c2.2 2.2 4.7 4 7.4 5.5v1.9h4.2c3.5 1.3 7.2 2 11 2H704c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32zM350 856.2L263.9 770H350v86.2zM664 888H414V746c0-22.1-17.9-40-40-40H232V264h432v624z"></path>
+                    </svg>
+                </i></button>
+                <pre class="line-numbers  language-cpp"><code class="  language-cpp">ping <span
+                        class="token number">127.0</span><span class="token punctuation">.</span><span
+                        class="token number">0.1</span> <span
+                        class="token comment">// 正常</span>
+ping www<span class="token punctuation">.</span>baidu<span class="token punctuation">.</span>com <span
+                            class="token comment">// 错误</span>
+<span class="token comment">// 没有启用联网功能;</span>
+vi <span class="token operator">/</span>etc<span class="token operator">/</span>sysconfig<span
+                            class="token operator">/</span>network<span class="token operator">-</span>scripts<span
+                            class="token operator">/</span>ifcfg<span class="token operator">-</span>ens33
+<span class="token comment">// 修改配置ONBOOT=no-----&gt;ONBOOT=yes</span>
+<span class="token comment">// wq保存退出</span>
+<span aria-hidden="true"
+      class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+            </div>
+            <h2>二、创建第一个C文件并运行</h2>
+            <div class="_2Uzcx_">
+                <button class="VJbwyy" type="button" aria-label="复制代码"><i aria-label="icon: copy"
+                                                                          class="anticon anticon-copy">
+                    <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="copy" width="1em" height="1em"
+                         fill="currentColor" aria-hidden="true">
+                        <path d="M832 64H296c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h496v688c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V96c0-17.7-14.3-32-32-32zM704 192H192c-17.7 0-32 14.3-32 32v530.7c0 8.5 3.4 16.6 9.4 22.6l173.3 173.3c2.2 2.2 4.7 4 7.4 5.5v1.9h4.2c3.5 1.3 7.2 2 11 2H704c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32zM350 856.2L263.9 770H350v86.2zM664 888H414V746c0-22.1-17.9-40-40-40H232V264h432v624z"></path>
+                    </svg>
+                </i></button>
+                <pre class="line-numbers  language-swift"><code class="  language-swift">touch test<span
+                        class="token punctuation">.</span>c <span class="token comment">// 创建c文件</span>
+vi test<span class="token punctuation">.</span>c <span class="token comment">// 编辑c文件并保存退出</span>
+
+<span class="token comment">// 编译并运行</span>
+<span class="token comment">// 输入 gcc -o 文件名(无后缀) 文件名(有后缀) 并回车</span>
+gcc <span class="token operator">-</span><span class="token number">0</span> test test<span
+                            class="token punctuation">.</span>c
+<span aria-hidden="true"
+      class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+            </div>
+        </article>
+        <div></div>
+        <div class="_19DgIp" style="margin-top:24px;margin-bottom:24px"></div>
+
+    </section>
+    <section class="-umr26" aria-label="baidu-ad"></section>
+
 </div>

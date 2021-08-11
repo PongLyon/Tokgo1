@@ -64,10 +64,17 @@
     position: relative;
     width: 100%;
     margin: 0 0 15px;
+    padding: 15px 2px 20px 0;
     border-bottom: 1px solid #f0f0f0;
     word-wrap: break-word;
 }
-
+.note-list .title {
+    margin: 7px 0 4px;
+    display: inherit;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+}
 
 .containers .main .note-list .have-img .wrap-img{
     width: 150px;
@@ -107,4 +114,99 @@ p{
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
+}
+
+
+/*           新加    */
+
+.ouvJEz{
+    padding: 32px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+._1RuRku{
+    font-size: 30px;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+._2rhmJa{
+    font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    word-break: break-word;
+}
+._2rhmJa p{
+    margin-bottom: 20px;
+    word-break: break-word;
+}
+
+._2rhmJa .image-package{
+    width: 100%;
+    margin: 0;
+    padding-bottom: 25px;
+    text-align: center;
+    font-size: 0;
+}
+
+._2rhmJa .image-package .image-container{
+    position: relative;
+    z-index: 95;
+    transition: background-color .1s linear;
+    margin: 0 auto;
+}
+._2rhmJa .image-package .image-container-fill{
+    z-index: 90;
+}
+
+._2rhmJa .image-package .image-container .image-view{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+._2rhmJa .image-package .image-container .image-view img{
+    transition: all .15s linear;
+    z-index: 95;
+    opacity: 1;
+}
+._2rhmJa .image-package img{
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+    border: 0;
+}
+
+._2rhmJa .image-package .image-caption{
+    min-width: 20%;
+    max-width: 80%;
+    min-height: 43px;
+    display: inline-block;
+    padding: 10px;
+    margin: 0 auto;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 13px;
+    color: #999999;
+}
+
+article{
+    display: block;
+}
+
+p{
+    margin-top: 0px;
+}
+.note-list .meta{
+    padding-right: 0!important;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+}
+.note-list .meta span{
+    margin-right: 10px;
+    color: #b4b4b4;
 }
